@@ -1,0 +1,755 @@
+python vocab.py \
+--src_vocab_size 150000 \
+--tgt_vocab_size 50000 \
+--include_singleton \
+--train_src  /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/train.s \
+--train_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/train.t \
+--output ./nyt-vocab.test.bin
+
+python vocab.py \
+--src_vocab_size 150000 \
+--tgt_vocab_size 50000 \
+--train_src  ./nyt-data/data/train.s \
+--train_tgt ./nyt-data/data/train.t \
+--output ./nyt-vocab-no-single.test.bin
+
+python vocab.py \
+--src_vocab_size 50000 \
+--tgt_vocab_size 50000 \
+--include_singleton \
+--train_src  /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/train.s \
+--train_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/train.t \
+--output ./nyt-vocab-50K.bin
+
+
+python vocab.py \
+--src_vocab_size 50000 \
+--tgt_vocab_size 50000 \
+--include_singleton \
+--train_src  /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data_head/train.s \
+--train_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data_head/train.t \
+--output ./nyt-vocab-head-50K.bin
+
+python vocab.py \
+--src_vocab_size 30000 \
+--tgt_vocab_size 20000 \
+--include_singleton \
+--train_src  ./nyt-data/data_head/train.s \
+--train_tgt ./nyt-data/data_head/train.t \
+--output ./nyt-vocab-head-30K.bin
+
+python vocab.py \
+--src_vocab_size 45000 \
+--tgt_vocab_size 28000 \
+--include_singleton \
+--train_src  ./nqg_data/train.s \
+--train_tgt ./nqg_data/train.t \
+--output ./nqg-vocab.bin
+
+python vocab.py \
+--src_vocab_size 30000 \
+--tgt_vocab_size 10000 \
+--include_singleton \
+--train_src  ./nqg_data/train.s \
+--train_tgt ./nqg_data/train.t \
+--output ./nqg-vocab-2.bin
+
+
+python vocab.py \
+--src_vocab_size 30000 \
+--tgt_vocab_size 10000 \
+--train_src  ./nqg_data/train.s \
+--train_tgt ./nqg_data/train.t \
+--output ./nqg-vocab-3.bin
+
+
+nohup  python nmt.py \
+    --mode train \
+    --vocab ./nyt-vocab.bin \
+    --save_to models/rl-ds-test \
+    --valid_niter 2400 \
+    --valid_metric ppl \
+    --beam_size 5 \
+    --batch_size 64 \
+    --hidden_size 256 \
+    --embed_size 256 \
+    --uniform_init 0.1 \
+    --dropout 0.2 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/train.s \
+    --train_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/train.t \
+    --dev_src /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/valid.s \
+    --dev_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/valid.t \
+    --cuda > rl-ds-test.log
+
+
+nohup  python nmt.py \
+    --mode train \
+    --vocab ./nyt-vocab.bin \
+    --save_to models/rl-ds-test2 \
+    --valid_niter 2400 \
+    --valid_metric ppl \
+    --beam_size 5 \
+    --batch_size 40 \
+    --hidden_size 256 \
+    --embed_size 256 \
+    --uniform_init 0.1 \
+    --dropout 0.2 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/train.s \
+    --train_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/train.t \
+    --dev_src /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/valid.s \
+    --dev_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/valid.t \
+    --cuda > rl-ds-test2.log
+
+nohup  python nmt.py \
+    --mode train \
+    --vocab ./nyt-vocab.bin \
+    --save_to models/rl-ds-test3 \
+    --valid_niter 2400 \
+    --valid_metric ppl \
+    --beam_size 5 \
+    --batch_size 32 \
+    --hidden_size 256 \
+    --embed_size 256 \
+    --uniform_init 0.1 \
+    --dropout 0.2 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/train.s \
+    --train_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/train.t \
+    --dev_src /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/valid.s \
+    --dev_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/valid.t \
+    --cuda > rl-ds-test3.log
+
+
+nohup  python nmt.py \
+    --mode train \
+    --vocab ./nyt-vocab-50K.bin \
+    --save_to models/rl-ds-test4 \
+    --valid_niter 2400 \
+    --valid_metric ppl \
+    --beam_size 5 \
+    --batch_size 32 \
+    --hidden_size 256 \
+    --embed_size 256 \
+    --uniform_init 0.1 \
+    --dropout 0.2 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/train.s \
+    --train_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/train.t \
+    --dev_src /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/valid.s \
+    --dev_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/valid.t \
+    --cuda > rl-ds-test4.log
+
+nohup  python nmt.embed_share.py \
+    --mode train \
+    --vocab ./nyt-vocab-50K.bin \
+    --save_to models/rl-ds-test5 \
+    --valid_niter 2400 \
+    --valid_metric ppl \
+    --beam_size 5 \
+    --batch_size 32 \
+    --hidden_size 256 \
+    --embed_size 256 \
+    --uniform_init 0.1 \
+    --dropout 0.2 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/train.s \
+    --train_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/train.t \
+    --dev_src /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/valid.s \
+    --dev_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/valid.t \
+    --cuda > rl-ds-test5.log
+
+
+
+
+nohup  python nmt.py \
+    --mode train \
+    --vocab ./nyt-vocab-50K.bin \
+    --save_to models/rl-ds-test6 \
+    --lr 0.1 \
+    --valid_niter 2400 \
+    --valid_metric ppl \
+    --beam_size 5 \
+    --batch_size 32 \
+    --hidden_size 256 \
+    --embed_size 256 \
+    --uniform_init 0.1 \
+    --dropout 0.2 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/train.s \
+    --train_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/train.t \
+    --dev_src /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/valid.s \
+    --dev_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/valid.t \
+    --cuda > rl-ds-test6.log
+
+nohup  python nmt.py \
+    --mode train \
+    --vocab ./nyt-vocab-50K.bin \
+    --save_to models/rl-ds-test7 \
+    --lr 0.001 \
+    --valid_niter 2400 \
+    --valid_metric ppl \
+    --beam_size 5 \
+    --batch_size 32 \
+    --hidden_size 512 \
+    --embed_size 256 \
+    --uniform_init 0.1 \
+    --dropout 0.2 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/train.s \
+    --train_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/train.t \
+    --dev_src /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/valid.s \
+    --dev_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/valid.t \
+    --cuda > rl-ds-test7.log
+
+nohup  python nmt.embed_share.py \
+    --mode train \
+    --vocab ./nyt-vocab-50K.bin \
+    --save_to models/rl-ds-test8 \
+    --lr 0.001 \
+    --valid_niter 2400 \
+    --valid_metric ppl \
+    --beam_size 5 \
+    --batch_size 16 \
+    --hidden_size 512 \
+    --embed_size 256 \
+    --uniform_init 0.1 \
+    --dropout 0.2 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/train.s \
+    --train_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/train.t \
+    --dev_src /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/valid.s \
+    --dev_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/valid.t \
+    --cuda > rl-ds-test8.log
+
+
+nohup  python nmt.embed_share.py \
+    --mode train \
+    --vocab ./nyt-vocab-50K.bin \
+    --save_to models/rl-ds-test9 \
+    --lr 0.001 \
+    --valid_niter 2400 \
+    --valid_metric ppl \
+    --beam_size 5 \
+    --batch_size 32 \
+    --hidden_size 512 \
+    --embed_size 512 \
+    --uniform_init 0.1 \
+    --dropout 0.2 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/train.s \
+    --train_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/train.t \
+    --dev_src /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/valid.s \
+    --dev_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/valid.t \
+    --cuda > rl-ds-test9.log
+
+------------nqg-----------
+nohup  python nmt.py \
+    --mode train \
+    --vocab ./nqg-vocab.bin \
+    --save_to models/nqg_model \
+    --valid_niter 2400 \
+    --valid_metric ppl \
+    --beam_size 5 \
+    --batch_size 32 \
+    --hidden_size 512 \
+    --embed_size 256 \
+    --uniform_init 0.1 \
+    --dropout 0.2 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src ./nqg_data/train.s \
+    --train_tgt ./nqg_data/train.t \
+    --dev_src ./nqg_data/valid.s \
+    --dev_tgt ./nqg_data/valid.t \
+    --cuda > nqg_model.log
+
+nohup  python nmt.py \
+    --mode train \
+    --vocab ./nqg-vocab.bin \
+    --save_to models/nqg_model_2 \
+    --valid_niter 2400 \
+    --valid_metric ppl \
+    --lr 0.0003 \
+    --beam_size 5 \
+    --batch_size 32 \
+    --hidden_size 512 \
+    --embed_size 256 \
+    --uniform_init 0.1 \
+    --dropout 0.2 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src ./nqg_data/train.s \
+    --train_tgt ./nqg_data/train.t \
+    --dev_src ./nqg_data/valid.s \
+    --dev_tgt ./nqg_data/valid.t \
+    --cuda > nqg_model_2.log
+
+
+nohup  python nmt.py \
+    --mode train \
+    --vocab ./nqg-vocab.bin \
+    --save_to models/nqg_model_3 \
+    --valid_niter 2400 \
+    --valid_metric ppl \
+    --lr 0.0003 \
+    --beam_size 5 \
+    --batch_size 32 \
+    --hidden_size 512 \
+    --embed_size 256 \
+    --uniform_init 0 \
+    --dropout 0.2 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src ./nqg_data/train.s \
+    --train_tgt ./nqg_data/train.t \
+    --dev_src ./nqg_data/valid.s \
+    --dev_tgt ./nqg_data/valid.t \
+    --cuda > nqg_model_3.log
+
+nohup  python nmt.py \
+    --mode train \
+    --vocab ./nqg-vocab.bin \
+    --save_to models/nqg_model_4 \
+    --valid_niter 2400 \
+    --valid_metric ppl \
+    --lr 0.0003 \
+    --beam_size 5 \
+    --batch_size 32 \
+    --hidden_size 512 \
+    --embed_size 256 \
+    --uniform_init 0.001 \
+    --dropout 0.2 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src ./nqg_data/train.s \
+    --train_tgt ./nqg_data/train.t \
+    --dev_src ./nqg_data/valid.s \
+    --dev_tgt ./nqg_data/valid.t \
+    --cuda > nqg_model_4.log
+
+
+nohup  python nmt.py \
+    --mode train \
+    --vocab ./nqg-vocab-2.bin \
+    --save_to models/nqg_model_5 \
+    --valid_niter 2400 \
+    --valid_metric ppl \
+    --lr 0.0003 \
+    --beam_size 5 \
+    --batch_size 32 \
+    --hidden_size 512 \
+    --embed_size 256 \
+    --uniform_init 0.1 \
+    --dropout 0.2 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src ./nqg_data/train.s \
+    --train_tgt ./nqg_data/train.t \
+    --dev_src ./nqg_data/valid.s \
+    --dev_tgt ./nqg_data/valid.t \
+    --cuda > nqg_model_5.log
+
+nohup  python nmt.sgd.py \
+    --mode train \
+    --vocab ./nqg-vocab.bin \
+    --save_to models/nqg_model_5 \
+    --valid_niter 2400 \
+    --valid_metric ppl \
+    --lr 0.1 \
+    --beam_size 5 \
+    --batch_size 32 \
+    --hidden_size 512 \
+    --embed_size 256\
+    --uniform_init 0.1 \
+    --dropout 0.2 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src ./nqg_data/train.s \
+    --train_tgt ./nqg_data/train.t \
+    --dev_src ./nqg_data/valid.s \
+    --dev_tgt ./nqg_data/valid.t \
+    --cuda > nqg_model_6.log
+
+nohup  python nmt.py \
+    --mode train \
+    --vocab ./nqg-vocab.bin \
+    --save_to models/nqg_model_6 \
+    --valid_niter 2400 \
+    --valid_metric ppl \
+    --lr 0.0003 \
+    --beam_size 5 \
+    --batch_size 64 \
+    --hidden_size 1024 \
+    --embed_size 512\
+    --uniform_init 0.1 \
+    --dropout 0.2 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src ./nqg_data/train.s \
+    --train_tgt ./nqg_data/train.t \
+    --dev_src ./nqg_data/valid.s \
+    --dev_tgt ./nqg_data/valid.t \
+    --cuda > nqg_model_7.log
+
+
+nohup  python nmt.py \
+    --mode train \
+    --vocab ./nqg-vocab.bin \
+    --save_to models/nqg_model_7 \
+    --valid_niter 2400 \
+    --valid_metric ppl \
+    --lr 0.0003 \
+    --beam_size 5 \
+    --batch_size 32 \
+    --hidden_size 512 \
+    --embed_size 256 \
+    --uniform_init 0.1 \
+    --dropout 0.2 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src ./nqg_data/train.s \
+    --train_tgt ./nqg_data/train.t \
+    --dev_src ./nqg_data/valid.s \
+    --dev_tgt ./nqg_data/valid.t \
+    --cuda > nqg_model_8.log
+
+adam
+nohup  python nmt.mine.py \
+    --mode train \
+    --vocab ./nqg-vocab.bin \
+    --save_to models/nqg_model_8 \
+    --valid_niter 2400 \
+    --valid_metric ppl \
+    --lr 0.0003 \
+    --beam_size 5 \
+    --batch_size 64 \
+    --hidden_size 512 \
+    --embed_size 256 \
+    --uniform_init 0.1 \
+    --dropout 0.3 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src ./nqg_data/train.s \
+    --train_tgt ./nqg_data/train.t \
+    --dev_src ./nqg_data/valid.s \
+    --dev_tgt ./nqg_data/valid.t \
+    --cuda > nqg_model_9.log
+adam, decay learning rate at epoch 3
+nohup  python nmt.mine.py \
+    --mode train \
+    --vocab ./nqg-vocab.bin \
+    --save_to models/nqg_model_8 \
+    --valid_niter 2400 \
+    --valid_metric ppl \
+    --lr 0.0003 \
+    --beam_size 5 \
+    --batch_size 64 \
+    --hidden_size 512 \
+    --embed_size 256 \
+    --uniform_init 0.1 \
+    --dropout 0.3 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src ./nqg_data/train.s \
+    --train_tgt ./nqg_data/train.t \
+    --dev_src ./nqg_data/valid.s \
+    --dev_tgt ./nqg_data/valid.t \
+    --cuda > nqg_model_10.log
+sgd
+nohup  python nmt.mine.py \
+    --mode train \
+    --vocab ./nqg-vocab.bin \
+    --save_to models/nqg_model_8 \
+    --valid_niter 2400 \
+    --valid_metric ppl \
+    --lr 0.1 \
+    --beam_size 5 \
+    --batch_size 64 \
+    --hidden_size 512 \
+    --embed_size 256 \
+    --uniform_init 0.1 \
+    --dropout 0.3 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src ./nqg_data/train.s \
+    --train_tgt ./nqg_data/train.t \
+    --dev_src ./nqg_data/valid.s \
+    --dev_tgt ./nqg_data/valid.t \
+    --cuda > nqg_model_11.log
+
+
+nohup  python nmt.mine.py \
+    --mode train \
+    --vocab ./nqg-vocab.bin \
+    --save_to models/nqg_model_8 \
+    --valid_niter 2400 \
+    --valid_metric ppl \
+    --lr 0.1 \
+    --beam_size 5 \
+    --batch_size 64 \
+    --hidden_size 512 \
+    --embed_size 256 \
+    --uniform_init 0.1 \
+    --dropout 0.3 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src ./nqg_data/train.s \
+    --train_tgt ./nqg_data/train.t \
+    --dev_src ./nqg_data/valid.s \
+    --dev_tgt ./nqg_data/valid.t \
+    --cuda > nqg_model_12.log
+
+python nmt.py \
+    --mode test \
+    --load_model ./models/nqg_model_6.bin \
+    --beam_size 5 \
+    --decode_max_time_step 100 \
+    --save_to_file  ./decoded/nqg_model_6.gen  \
+    --test_src  ./nqg_data/test.s \
+    --test_tgt ./nqg_data/test.t \
+    --cuda
+
+
+
+-------------
+
+nohup  python nmt.py \
+    --mode train \
+    --vocab ./nyt-vocab-head-50K.bin \
+    --save_to models/rl-ds-head-test \
+    --valid_niter 2400 \
+    --valid_metric ppl \
+    --beam_size 5 \
+    --batch_size 32 \
+    --hidden_size 256 \
+    --embed_size 256 \
+    --uniform_init 0.1 \
+    --dropout 0.2 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data_head/train.s \
+    --train_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data_head/train.t \
+    --dev_src /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data_head/valid.s \
+    --dev_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data_head/valid.t \
+    --cuda > rl-ds-head-test.log
+
+nohup  python nmt.py \
+    --mode train \
+    --vocab ./nyt-vocab-head-30K.bin \
+    --save_to models/rl-ds-head-test-2 \
+    --valid_niter 2400 \
+    --valid_metric ppl \
+    --beam_size 5 \
+    --batch_size 32 \
+    --hidden_size 256 \
+    --embed_size 512 \
+    --uniform_init 0.1 \
+    --dropout 0.2 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src ./nyt-data/data_head/train.s \
+    --train_tgt ./nyt-data/data_head/train.t \
+    --dev_src ./nyt-data/data_head/valid.s \
+    --dev_tgt ./nyt-data/data_head/valid.t \
+    --cuda > rl-ds-head-test-2.log
+
+nohup  python nmt.py \
+    --mode train \
+    --vocab ./nyt-vocab-head-30K.bin \
+    --save_to models/rl-ds-head-test-3 \
+    --valid_niter 2400 \
+    --valid_metric ppl \
+    --beam_size 5 \
+    --batch_size 32 \
+    --hidden_size 256 \
+    --embed_size 256 \
+    --uniform_init 0.1 \
+    --dropout 0.2 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src ./nyt-data/data_head/train.s \
+    --train_tgt ./nyt-data/data_head/train.t \
+    --dev_src ./nyt-data/data_head/valid.s \
+    --dev_tgt ./nyt-data/data_head/valid.t \
+    --cuda > rl-ds-head-test-3.log
+
+nohup  python nmt.py \
+    --mode train \
+    --vocab ./nyt-vocab-head-30K.bin \
+    --save_to models/rl-ds-head-test-2 \
+    --valid_niter 1200 \
+    --valid_metric ppl \
+    --beam_size 5 \
+    --batch_size 8 \
+    --hidden_size 512 \
+    --embed_size 256 \
+    --uniform_init 0.1 \
+    --dropout 0.2 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src ./nyt-data/data_head/train.s \
+    --train_tgt ./nyt-data/data_head/train.t \
+    --dev_src ./nyt-data/data_head/valid.s \
+    --dev_tgt ./nyt-data/data_head/valid.t \
+    --cuda > rl-ds-head-test-4.log
+
+nohup  python nmt.py \
+    --mode train \
+    --vocab ./nyt-vocab-head-30K.bin \
+    --save_to models/rl-ds-head-test-2 \
+    --valid_niter 1200 \
+    --valid_metric ppl \
+    --beam_size 5 \
+    --batch_size 8 \
+    --hidden_size 128 \
+    --embed_size 64 \
+    --uniform_init 0.1 \
+    --dropout 0.2 \
+    --clip_grad 5.0 \
+    --lr_decay 0.5 \
+    --train_src ./nyt-data/data_head/train.s \
+    --train_tgt ./nyt-data/data_head/train.t \
+    --dev_src ./nyt-data/data_head/valid.s \
+    --dev_tgt ./nyt-data/data_head/valid.t \
+    --cuda > rl-ds-head-test-5.log
+
+nohup python nmt.py \
+    --mode test \
+    --load_model models/rl-ds-test2.bin \
+    --beam_size 5 \
+    --decode_max_time_step 100 \
+    --save_to_file  /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/decoded/rl-ds-test2.gen  \
+    --test_src  /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/test.s \
+    --test_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/test.t \
+    --cuda
+
+
+
+
+nohup python nmt.py \
+    --mode test \
+    --load_model models/rl-ds-test4.bin \
+    --beam_size 5 \
+    --decode_max_time_step 100 \
+    --save_to_file  /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/decoded/rl-ds-test4.gen  \
+    --test_src  /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/test.s \
+    --test_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/test.t \
+    --cuda
+
+nohup python nmt.py \
+    --mode test \
+    --load_model models/rl-ds-test3.bin \
+    --beam_size 5 \
+    --decode_max_time_step 100 \
+    --save_to_file  /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/decoded/rl-ds-test3.gen  \
+    --test_src  /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/test.s \
+    --test_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/test.t \
+    --cuda
+
+
+
+---------------------RL ---------
+nohup python nmt.RL.py \
+--mode RL_train \
+--lr 0.0001 \
+--save_to models/RL.test4 \
+--load_model  models/rl-ds-test4.bin \
+--cuda > RL.test4.log
+
+nohup python nmt.RL.py \
+--mode RL_train \
+--lr 0.0001 \
+--save_to models/RL.test4.v2 \
+--load_model  models/rl-ds-test4.bin \
+--cuda > RL.test4.log
+
+sudo  python nmt.RL.sample.py \
+--mode RL_train \
+--lr 0.0001 \
+--save_to models/RL.test4.v3 \
+--load_model  models/rl-ds-test4.bin \
+--cuda > RL.test4.v3.log
+
+
+
+## remove softmax and reduce the learning rate
+
+nohup  python nmt.RL.sample.py \
+--mode RL_train \
+--lr 0.00001 \
+--save_to models/RL.test4.v4 \
+--load_model  models/rl-ds-test4.bin \
+--cuda > RL.test4.v4.log
+
+
+# 
+nohup  python nmt.RL.sample.py \
+--mode RL_train \
+--lr 0.00001 \
+--save_to models/RL.test4.v5 \
+--load_model  models/rl-ds-test4.bin \
+--cuda > RL.test4.v5.log
+
+nohup  python nmt.RL.py \
+--mode RL_train \
+--lr 0.00001 \
+--save_to models/RL.test4.v6 \
+--load_model  models/rl-ds-test4.bin \
+--cuda > RL.test4.v6.log
+
+nohup  python nmt.RL.valid.py \
+--mode RL_train \
+--lr 0.00005 \
+--save_to models/RL.test4.v9 \
+--load_model  models/rl-ds-test4.bin \
+--cuda > RL.test4.v9.log
+
+
+
+models/RL.test4.iter12000.bi
+
+python nmt.py \
+    --mode test \
+    --load_model models/RL.test4.v7.iter240000.bin \
+    --beam_size 5 \
+    --decode_max_time_step 100 \
+    --save_to_file  ./decoded/RL.test4.v7.iter240000.gen  \
+    --test_src  ./nyt-data/data/test.s \
+    --test_tgt ./nyt-data/data/test.t \
+    --cuda
+          
+
+models/RL.test4.v3.iter2400.bin
+
+python nmt.py \
+    --mode test \
+    --load_model models/RL.test4.v6.iter312000.bin \
+    --beam_size 5 \
+    --decode_max_time_step 100 \
+    --save_to_file  /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/decoded/RL.test4.iter12000.gen.2  \
+    --test_src  /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/test.s \
+    --test_tgt /home/hai/Documents/Research/rf-for-ds/pytorch_nmt/nyt-data/data/test.t \
+    --cuda
+
+python nmt.py \
+    --mode test \
+    --load_model ./models/joint-law.bin \
+    --beam_size 5 \
+    --decode_max_time_step 100 \
+    --save_to_file  ./decoded/joint-law.gen  \
+    --test_src  ./law-data/begin_end/train.s \
+    --test_tgt ./law-data/begin_end/train.t \
+    --cuda
+
+ 
